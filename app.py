@@ -1,14 +1,23 @@
-from config import app,jsonify
+from config import app,jsonify,request
 import requests
 
-@app.route('/api/classify-number?number=<string:number>')
-def classify_number(number):
+@app.route('/api/classify-number')
+def classify_number():
     
+    number = request.args.get('number')
+    
+    if number is None:
+        return jsonify({
+            "number": "missing parameter",
+            "error": True
+        }), 400
+        
     if not (str(number).isdigit()):
         return jsonify({
             "number": "alphabet",
             "error": True
             }),400
+   
 
     number = int(number)
     
