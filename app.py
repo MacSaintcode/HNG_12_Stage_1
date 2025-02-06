@@ -1,7 +1,7 @@
 from config import app,jsonify
 import requests
 
-@app.route('/classify-number?number=<string:number>')
+@app.route('/api/classify-number?number=<string:number>')
 def classify_number(number):
     
     if not (str(number).isdigit()):
