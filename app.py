@@ -1,14 +1,16 @@
 from config import app,jsonify
 import requests
 
-@app.route('/classify-number/<int:number>')
+@app.route('/classify-number/<string:number>')
 def classify_number(number):
     
-    if str(number).isalpha:
+    if not (str(number).isdigit()):
         return jsonify({
             "number": "alphabet",
             "error": True
             }),400
+
+    number = int(number)
     
     properties=[]
     if check_armstrong(number):
@@ -25,7 +27,7 @@ def classify_number(number):
         "fun_fact": requests.get(f"http://numbersapi.com/{number}/math?callback=showNumber").text
         
     }),200
-    
+        
     
     
 def check_odd_even(num):
