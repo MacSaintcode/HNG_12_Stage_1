@@ -56,7 +56,6 @@ def check_armstrong(num):
     add=0
     for i in range (len(str(num))):
         add+=int(str(num)[i])**(len(str(num)))
-        print(add)
     if add==num:
         return True
     return False
