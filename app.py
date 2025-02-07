@@ -55,7 +55,7 @@ def digit_sum(num):
 def check_armstrong(num):
     add=0
     for i in range (len(str(num))):
-        add+=int(str(num)[i])**int(str(num)[0])
+        add+=int(str(num)[i])**(len(str(num)))
         print(add)
     if add==num:
         return True
