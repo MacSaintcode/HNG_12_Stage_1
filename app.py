@@ -5,16 +5,10 @@ import requests
 def classify_number():
     
     number = request.args.get('number')
-    
-    if number is None:
-        return jsonify({
-            "number": "missing parameter",
-            "error": True
-        }), 400
         
     if not (str(number).isdigit()):
         return jsonify({
-            "number": "alphabet",
+            "number": f"{number}",
             "error": True
             }),400
    
@@ -31,7 +25,7 @@ def classify_number():
         "number": number,
         "is_prime": check_prime(number)=="prime",
         "is_perfect": check_prime(number)=="perfect",
-        "properties": f"{properties}",
+        "properties": f"[{properties}]",
         "digit_sum": digit_sum(number),
         "fun_fact": requests.get(f"http://numbersapi.com/{number}/math?callback=showNumber").text
         
@@ -62,7 +56,7 @@ def check_armstrong(num):
     add=0
     for i in range (len(str(num))):
         add+=int(str(num)[i])**int(str(num)[0])
-    
+        print(add)
     if add==num:
         return True
     return False
