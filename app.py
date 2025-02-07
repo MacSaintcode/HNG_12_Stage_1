@@ -1,5 +1,5 @@
-from config import app,jsonify,request
-import requests
+from flask import Flask,jsonify,request,CORS,requests,json,app
+
 
 @app.route('/api/classify-number')
 def classify_number():
@@ -25,7 +25,7 @@ def classify_number():
         "number": number,
         "is_prime": check_prime(number)=="prime",
         "is_perfect": check_prime(number)=="perfect",
-        "properties": f"{properties}",
+        "properties": json.dumps(properties),
         "digit_sum": digit_sum(number),
         "fun_fact": requests.get(f"http://numbersapi.com/{number}/math?callback=showNumber").text
         
