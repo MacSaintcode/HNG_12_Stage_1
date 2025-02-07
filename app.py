@@ -25,7 +25,7 @@ def classify_number():
         "number": number,
         "is_prime": check_prime(number)=="prime",
         "is_perfect": check_prime(number)=="perfect",
-        "properties": f"[{properties}]",
+        "properties": f"{properties}",
         "digit_sum": digit_sum(number),
         "fun_fact": requests.get(f"http://numbersapi.com/{number}/math?callback=showNumber").text
         
