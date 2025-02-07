@@ -1,4 +1,4 @@
-from flask import Flask,jsonify,request,CORS,requests,json,app
+from config import Flask,jsonify,request,CORS,requests,json,app
 
 
 @app.route('/api/classify-number')
