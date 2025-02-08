@@ -54,33 +54,13 @@ def check_odd_even(num):
 def is_prime(n):
     if n < 2:
         return False
-    if n in (2, 3):
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
             return False
-        i += 6  # Skipping numbers divisible by 2 and 3
-    
     return True
 
 def is_perfect(n):
-    if n < 2:
-        return False
-    
-    total = 1
-    sqrt_n = int(n ** 0.5)
-
-    for i in range(2, sqrt_n + 1):
-        if n % i == 0:
-            total += i
-            if i != n // i:  # Avoid adding the square root twice
-                total += n // i
-    
-    return total == n
+    return sum(i for i in range(1, n) if n % i == 0) == n
 
     
 def digit_sum(num):
