@@ -5,25 +5,17 @@ from config import Flask,jsonify,request,CORS,requests,app
 def classify_number():
     
     number = request.args.get('number')
-    number = abs(int(number))
-    try:
-        if not (str(number).isdigit()):
-            return jsonify({
-                "number": f"{number}",
-                "error": True
-                }),400
-    except ValueError:
-        return jsonify({
-                "number": f"{number}",
-                "error": True
-                }),400
         
-   
+    if number is None or number.strip() == "":
+        return jsonify({"error": True, "number": ""}), 400
 
-    
+    try:
+        number = int(number)
+    except ValueError:
+        return jsonify({"error": True, "number": number}), 400
     
     values={
-        "number": number,
+         "number": number,
         "is_prime": is_prime(number),
         "is_perfect": is_perfect(number),
         "properties":[],
@@ -73,12 +65,14 @@ def is_perfect(n):
     
 def digit_sum(num):
     add=0
+    num=abs(num)
     for i in range (len(str(num))):
         add+=int(str(num)[i])
     return add
 
 def check_armstrong(num):
     add=0
+    num=abs(num)
     for i in range (len(str(num))):
         add+=int(str(num)[i])**(len(str(num)))
     if add==num:
