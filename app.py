@@ -5,18 +5,25 @@ from config import Flask,jsonify,request,CORS,requests,app
 def classify_number():
     
     number = request.args.get('number')
-        
-    if not (str(number).isdigit()):
+    number = abs(int(number))
+    try:
+        if not (str(number).isdigit()):
+            return jsonify({
+                "number": f"{number}",
+                "error": True
+                }),400
+    except ValueError:
         return jsonify({
-            "number": f"{number}",
-            "error": True
-            }),400
+                "number": f"{number}",
+                "error": True
+                }),400
+        
    
 
-    number = int(number)
+    
     
     values={
-         "number": number,
+        "number": number,
         "is_prime": is_prime(number),
         "is_perfect": is_perfect(number),
         "properties":[],
