@@ -15,21 +15,33 @@ def classify_number():
 
     number = int(number)
     
-    properties=[]
-    if check_armstrong(number):
-        properties.append("armstrong")
-    
-    properties.append(check_odd_even(number))
-    
-    return jsonify({
-        "number": number,
-        "is_prime": check_prime(number)=="prime",
-        "is_perfect": check_prime(number)=="perfect",
-        "properties":properties,
+    values={
+         "number": number,
+        "is_prime": is_prime(number),
+        "is_perfect": is_perfect(number),
+        "properties":[],
         "digit_sum": digit_sum(number),
-        "fun_fact": requests.get(f"http://numbersapi.com/{number}/math?callback=showNumber").text
+        "fun_fact": fun_facts(number)
+    }
+    
+    if check_armstrong(number):
+        values["properties"].append("armstrong")
+    
+    values["properties"].append(check_odd_even(number))
+    
+    
+    return jsonify(values),200
         
-    }),200
+    
+def fun_facts(num):
+    try:
+        facts=requests.get(f"http://numbersapi.com/{num}/math?callback=showNumber")
+        if facts.status_code==200:
+            return facts.text
+        else:
+            return f"Fun fact Unavailable for {num}"
+    except requests.RequestException:
+        return f"Fun fact Unavailable!"
         
     
     
@@ -40,11 +52,17 @@ def check_odd_even(num):
         return "even"
 
     
-def check_prime(num):
-    if num%2!=0 or num==2:
-        return "prime"
-    else:
-        return "perfect"
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_perfect(n):
+    return sum(i for i in range(1, n) if n % i == 0) == n
+
     
 def digit_sum(num):
     add=0
